@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 43 46% 94%; /* cream #F7F2E7 */
+    --foreground: 66 12% 10%; /* ink #1C1D17 */
+
+    --card: 0 0% 100%;
+    --card-foreground: 66 12% 10%;
+
+    --primary: 141 33% 18%; /* forest */
+    --primary-foreground: 43 46% 94%;
+
+    --muted: 43 30% 88%;
+    --muted-foreground: 60 6% 42%; /* stone */
+
+    --border: 43 20% 82%;
+    --input: 43 20% 82%;
+    --ring: 96 41% 45%; /* sprout */
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .section {
+    @apply py-16 md:py-24;
+  }
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6;
+  }
+  .container-prose {
+    @apply mx-auto w-full max-w-2xl px-5 sm:px-6;
+  }
+  .card-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lift;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sticky scroll-video helper */
+.scrub-sticky {
+  will-change: transform;
+}
