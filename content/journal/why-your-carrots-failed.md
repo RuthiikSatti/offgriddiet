@@ -4,6 +4,7 @@ description: "Forked, stubby, or no-show carrots almost always come down to thre
 date: "2026-07-01"
 author: "Off Grid Diet"
 tags: ["root vegetables", "beginner", "troubleshooting"]
+cover: "/images/journal/why-your-carrots-failed.png"
 ---
 
 If you've ever pulled up a carrot that looked more like a gnarled little hand than the supermarket-straight root you were promised, you're not alone. Carrots are one of the most-searched "why did my crop fail" vegetables — and the reasons are almost always the same three things.

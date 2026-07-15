@@ -9,7 +9,26 @@ import {
   useTransform,
   useMotionValueEvent,
 } from "framer-motion";
+import { Eye, CalendarClock } from "lucide-react";
 import { GridOverlay } from "@/components/layout/GridOverlay";
+import { WaitlistForm } from "@/components/WaitlistForm";
+import type { ArticleMeta } from "@/lib/journal";
+
+// Folded in from the old AppTeaser section — trimmed to the 2 most
+// differentiating lines. "Diagnose what went wrong" is intentionally omitted;
+// it contradicted the preventive positioning above.
+const appFeatures = [
+  {
+    icon: Eye,
+    title: "See it coming, not after",
+    body: "Early warning before yellowing leaves or stunted roots show up.",
+  },
+  {
+    icon: CalendarClock,
+    title: "Know what to do this week",
+    body: "A living plan for your climate and crops, not a generic calendar.",
+  },
+];
 
 const DURATION = 15.04;
 
@@ -129,7 +148,7 @@ function GlassCard({ c }: { c: Chapter }) {
   );
 }
 
-export function ChapterHero() {
+export function ChapterHero({ latestArticle }: { latestArticle?: ArticleMeta }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const target = useRef(0);
@@ -187,6 +206,11 @@ export function ChapterHero() {
   const o2 = useTransform(progress, [0.39, 0.43, 0.57, 0.61], [0, 1, 1, 0]);
   const o3 = useTransform(progress, [0.63, 0.67, 0.82, 0.86], [0, 1, 1, 0]);
   const o4 = useTransform(progress, [0.88, 0.93, 1.0], [0, 1, 1]);
+  // Gate interaction: the final panel is a full-screen overlay that is
+  // transparent during beats 1–4. Without this it would capture touch/scroll
+  // and expose a focusable (but invisible) waitlist form. Only make it live
+  // once the final beat is actually on screen.
+  const finalPointer = useTransform(progress, (v) => (v > 0.9 ? "auto" : "none"));
   const hint = useTransform(progress, [0, 0.05], [1, 0]);
   const opacities = [o0, o1, o2, o3];
 
@@ -234,28 +258,79 @@ export function ChapterHero() {
           </motion.div>
         ))}
 
-        {/* Final centre panel — brand + CTA */}
+        {/* Final centre panel — brand + how it works + waitlist + Harvest
+            teaser. Everything that used to live in AppTeaser / JournalPreview /
+            FinalCta now lives here, so the page ends on the video instead of
+            scrolling into three more static sections. pointerEvents is gated on
+            finalPointer so this overlay is inert until the final beat. */}
         <motion.div
-          style={{ opacity: o4 }}
-          className="absolute inset-0 flex items-center"
+          style={{ opacity: o4, pointerEvents: finalPointer }}
+          className="absolute inset-0 overflow-y-auto py-10"
         >
           <div className="container-page w-full text-center">
             <p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-sprout-light">
               [ 00:15 · OFF GRID DIET ]
             </p>
-            <h2 className="mx-auto mt-4 max-w-4xl font-heading text-4xl font-extrabold uppercase leading-[0.9] tracking-tight text-cream drop-shadow sm:text-7xl">
+            <h2 className="mx-auto mt-4 max-w-4xl font-heading text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-cream drop-shadow sm:text-5xl">
               Grow food that actually survives.
             </h2>
-            <div className="pointer-events-auto mt-8 flex flex-wrap justify-center gap-3">
+
+            {/* Folded in from AppTeaser */}
+            <div className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-2">
+              {appFeatures.map((f) => (
+                <div
+                  key={f.title}
+                  className="rounded-xl border border-cream/15 bg-forest-900/40 p-4 backdrop-blur-md"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-sprout/20 text-sprout-light">
+                    <f.icon className="h-4 w-4" />
+                  </span>
+                  <h3 className="mt-3 font-heading text-sm font-semibold text-cream">
+                    {f.title}
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-cream/75">
+                    {f.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Folded in from JournalPreview — one visual teaser, not the full
+                grid, with an actual cover image instead of a bare text link. */}
+            {latestArticle && (
               <Link
-                href="#waitlist"
-                className="bg-sprout px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-forest-900 transition-colors hover:bg-sprout-light"
+                href={`/journal/${latestArticle.slug}`}
+                className="mx-auto mt-6 flex max-w-md items-center gap-4 overflow-hidden rounded-xl border border-cream/15 bg-forest-900/40 p-3 text-left backdrop-blur-md transition-colors hover:border-cream/30"
               >
-                Join the Waitlist
+                {latestArticle.cover ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={latestArticle.cover}
+                    alt=""
+                    className="h-16 w-16 shrink-0 rounded-lg object-cover"
+                  />
+                ) : null}
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-sprout-light">
+                    This week&apos;s Harvest
+                  </p>
+                  <p className="mt-1 text-sm font-semibold leading-snug text-cream">
+                    {latestArticle.title}
+                  </p>
+                </div>
               </Link>
+            )}
+
+            {/* Folded in from FinalCta — the primary waitlist ask now lives
+                where the story ends, not three sections later. */}
+            <div id="waitlist" className="mx-auto mt-8 max-w-md scroll-mt-20">
+              <WaitlistForm source="chapter-hero-final" variant="light" />
+            </div>
+
+            <div className="mt-4 flex justify-center">
               <Link
                 href="/research"
-                className="border border-cream/40 px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-cream transition-colors hover:bg-cream/10"
+                className="border border-cream/40 px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-widest text-cream transition-colors hover:bg-cream/10"
               >
                 See the Research
               </Link>
