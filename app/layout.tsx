@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/site";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { StructuredData } from "@/components/StructuredData";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${archivo.variable} ${spaceMono.variable} min-h-screen bg-background font-sans text-foreground`}
       >
+        <StructuredData />
         <Navbar />
         <main>{children}</main>
         <Footer />

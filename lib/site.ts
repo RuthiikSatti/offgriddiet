@@ -15,11 +15,26 @@ export const siteConfig = {
     "Get early access the moment the app is ripe — plus one practical gardening article harvested for you every week, free.",
 
   contactEmail: "hello@offgriddiet.com",
+  foundingYear: "2026",
+
+  // Real profiles only — leave blank until the account actually exists.
+  // Empty entries are filtered out of the Organization schema's `sameAs`,
+  // so we never publish a dead link. Fill these in as you create them;
+  // they're the third-party trust signal answer engines look for.
+  social: {
+    twitter: "", // e.g. "https://x.com/offgriddiet"
+    instagram: "",
+    reddit: "",
+    linkedin: "",
+    productHunt: "",
+  },
 
   nav: [
     { label: "Home", href: "/" },
     { label: "The Harvest", href: "/journal" },
     { label: "The Research", href: "/research" },
+    { label: "About", href: "/about" },
+    { label: "FAQ", href: "/faq" },
   ],
 } as const;
 
