@@ -1,7 +1,9 @@
-type Pain = { title: string; detail: string };
+type Pain = { title: string; detail: string; solved?: boolean };
 
 // The three strongest hooks lead; all eight are rendered in the HTML (no
 // hidden/expander content) so the full evidence is visible and verifiable.
+// `solved: true` marks the one failure mode most published advice already
+// covers well — it's what makes the "1 of 8" claim checkable, not asserted.
 const painPoints: Pain[] = [
   {
     title: "Harvest timing failure",
@@ -22,6 +24,7 @@ const painPoints: Pain[] = [
     title: "Plant diagnosis confusion",
     detail:
       "“I have no idea if this is a nutrient problem, a pest, or overwatering. The leaf just looks… wrong.”",
+    solved: true,
   },
   {
     title: "Food scarcity anxiety",
@@ -47,18 +50,23 @@ const painPoints: Pain[] = [
 
 export function PainPoints() {
   return (
-    <ol className="space-y-3">
+    <ol className="divide-y divide-line border-y border-line">
       {painPoints.map((p, i) => (
-        <li
-          key={p.title}
-          className="rounded-lg border border-cream/10 bg-cream/5 p-4"
-        >
-          <p className="font-heading text-sm font-bold uppercase tracking-tight text-cream">
-            <span className="text-sprout-light">{i + 1}.</span> {p.title}
-          </p>
-          <p className="mt-1 text-sm leading-relaxed text-cream/80">
-            {p.detail}
-          </p>
+        <li key={p.title} className="py-4">
+          <div className="flex items-start justify-between gap-3">
+            <p className="font-heading text-sm font-semibold leading-snug tracking-tight text-ink">
+              <span className="font-mono font-normal text-bark">
+                {String(i + 1).padStart(2, "0")}
+              </span>{" "}
+              {p.title}
+            </p>
+            {p.solved && (
+              <span className="shrink-0 font-mono text-[9px] uppercase tracking-wider text-beet">
+                Well covered
+              </span>
+            )}
+          </div>
+          <p className="mt-2 text-sm leading-relaxed text-bark">{p.detail}</p>
         </li>
       ))}
     </ol>

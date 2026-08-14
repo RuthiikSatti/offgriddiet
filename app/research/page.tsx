@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Research } from "@/components/sections/Research";
-import { GridOverlay } from "@/components/layout/GridOverlay";
 
 export const metadata: Metadata = {
   title: "The Research — The Documented Case for Off Grid Diet",
@@ -11,11 +10,8 @@ export const metadata: Metadata = {
 
 export default function ResearchPage() {
   return (
-    <div className="relative min-h-screen bg-forest-900 pt-16">
-      <GridOverlay tone="light" />
-      <div className="relative z-10">
-        <Research />
-      </div>
+    <div className="pt-20">
+      <Research />
     </div>
   );
 }

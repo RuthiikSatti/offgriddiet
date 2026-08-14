@@ -1,106 +1,114 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SectionHeading } from "@/components/sections/SectionHeading";
-import { GridOverlay } from "@/components/layout/GridOverlay";
+import { ArrowRight } from "lucide-react";
+import { FadeUp } from "@/components/motion/FadeUp";
 import { StructuredData } from "@/components/StructuredData";
 import { faqSchema, type QA } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "FAQ — Is Off Grid Diet Available Yet?",
+  title: "FAQ — About the Research",
   description:
-    "Straight answers about Off Grid Diet: whether it's available yet, how it differs from PictureThis and Plantix, where the research comes from, and how to get early access.",
+    "Straight answers about Off Grid Diet: what the project is, where the research comes from, how findings are sourced, and what subscribing gets you.",
   alternates: { canonical: "/faq" },
 };
 
-// Single source of truth: the visible list and the FAQPage JSON-LD are both
-// built from this. Answers are deliberately honest about the pre-launch stage —
-// that candor is the point, and it's what an answer engine will quote.
+/**
+ * Single source of truth: the visible list and the FAQPage JSON-LD are both
+ * built from this, so every answer has to be literally true — an answer engine
+ * may quote it verbatim. Don't add claims about products, launches, pricing or
+ * access; there is nothing being sold here.
+ */
 const faqs: QA[] = [
   {
-    question: "Is Off Grid Diet available to download yet?",
+    question: "What is Off Grid Diet?",
     answer:
-      "Not yet — it's in active development. Join the waitlist and you'll get early access the moment it's ready, plus one practical gardening article every week in the meantime.",
-  },
-  {
-    question: "Is Off Grid Diet a real product, or just a landing page?",
-    answer:
-      "It's a real product in active development, built on documented research — a carrot-failure Reddit post with 2,586 upvotes and eight gardening pain points mapped from real gardening threads. Because it's pre-launch and waitlist-based, you won't find it on Trustpilot, consumer-review forums, or the app stores yet. That's expected for a product at this stage, not a red flag.",
-  },
-  {
-    question: "How is it different from PictureThis, Plantix, or Planta?",
-    answer:
-      "Those apps are diagnostic: they tell you what's already wrong once a problem is visible. Off Grid Diet is preventive — it's designed to flag issues like harvest timing, pests, and soil trouble before they show up. Of the eight pain points we mapped from real gardeners, existing apps solve one (diagnosing what's already visible). We're building the other seven.",
-  },
-  {
-    question: "When will it launch?",
-    answer:
-      "We're not committing to a public launch date while it's still in development — we'd rather ship it right than rush it. Waitlist members hear first and get early access before anyone else.",
-  },
-  {
-    question: "What will it cost?",
-    answer:
-      "Pricing isn't finalized yet. Waitlist members will get the earliest access and the best available terms when we open it up.",
+      "It's a gardening research project. We map why home food crops fail — using documented reports from real growers rather than a survey — and publish the findings as free weekly writing. There's no product, no app, and nothing for sale.",
   },
   {
     question: "Where does your research come from?",
     answer:
-      "Real gardening communities — r/homesteading, r/vegetablegardening, r/urbanfarming and related threads — not a survey. You can see the full breakdown, including the eight validated pain points, on the Research page.",
+      "Two places. The failure patterns come from real gardening communities — r/homesteading, r/vegetablegardening, r/urbanfarming and related threads — read and grouped by hand. The horticultural guidance comes from public sources, prioritising Extension programmes and government agencies, which are linked from each finding and collected in the Library.",
   },
   {
-    question: "How do I get early access?",
+    question: "How is this different from ordinary gardening advice?",
     answer:
-      "Join the waitlist. It's free, there's no spam, and you also get one practical gardening read each week while you wait for the app.",
+      "Most gardening advice is good at naming a problem once it's visible. Our interest is the period before that: by the time a leaf yellows or a root forks, the soil, moisture and timing conditions that caused it were set weeks earlier. We focus on what was already measurable during that window.",
+  },
+  {
+    question: "Can I trust the findings?",
+    answer:
+      "Check them — that's why sources are attached. Each finding separates cited guidance from community signal from things we genuinely don't know, and links out to the original publisher. Where regional conditions or local rules should change the answer, we say so. Recommendations are for learning and are not a substitute for local Extension advice or product labels.",
+  },
+  {
+    question: "How often do you publish?",
+    answer:
+      "One practical read a week, plus research notes as findings are added. Everything is free.",
+  },
+  {
+    question: "What do I get if I subscribe?",
+    answer:
+      "One practical gardening read a week and the research notes as we map what fails and why. It's free, there's no spam, and you can unsubscribe in a click. You're not signing up to wait for anything — the first letter lands within the week.",
+  },
+  {
+    question: "Are you selling anything, or using affiliate links?",
+    answer:
+      "No. There are no affiliate links and no sponsored placements in the Library or in any finding. Sources are chosen for practical clarity, not commercial relationships.",
   },
 ];
 
 export default function FaqPage() {
   return (
-    <div className="relative min-h-screen bg-forest-900 pt-16">
-      <StructuredData extra={[faqSchema(faqs)]} />
-      <GridOverlay tone="light" />
-      <div className="relative z-10">
-        <section className="section">
-          <div className="container-page">
-            <SectionHeading
-              light
-              eyebrow="FAQ"
-              title="Straight answers about Off Grid Diet"
-              description="It's pre-launch and waitlist-based, so here's exactly where things stand — no vague hype."
-            />
+    <>
+      {/* base={false}: the root layout already emits Organization + WebSite. */}
+      <StructuredData base={false} extra={[faqSchema(faqs)]} />
 
-            <div className="mx-auto mt-12 max-w-3xl space-y-4">
-              {faqs.map((qa) => (
-                <div
-                  key={qa.question}
-                  className="rounded-xl border border-cream/15 bg-forest-700/50 p-6 text-cream backdrop-blur-md"
-                >
-                  <h2 className="font-heading text-lg font-bold leading-snug text-cream">
-                    {qa.question}
-                  </h2>
-                  <p className="mt-3 text-base leading-relaxed text-cream/85">
-                    {qa.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
+      <section className="pb-14 pt-32 sm:pt-40">
+        <div className="container-page">
+          <FadeUp immediate>
+            <p className="label-mono">FAQ</p>
+            <h1 className="mt-6 max-w-2xl text-balance font-heading text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
+              Straight answers about the research
+            </h1>
+          </FadeUp>
+        </div>
+      </section>
 
-            <div className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">
-              <Link
-                href="/#waitlist"
-                className="bg-sprout px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-forest-900 transition-colors hover:bg-sprout-light"
+      <section className="section pt-0">
+        <div className="container-page">
+          <div className="max-w-2xl">
+            {faqs.map((qa, i) => (
+              <FadeUp
+                key={qa.question}
+                delay={Math.min(i, 4) * 0.05}
+                className="border-t border-line py-9"
               >
-                Join the Waitlist
-              </Link>
-              <Link
-                href="/research"
-                className="border border-cream/40 px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-cream transition-colors hover:bg-cream/10"
-              >
-                See the Research
-              </Link>
-            </div>
+                <h2 className="font-heading text-lg font-semibold leading-snug tracking-tight text-ink">
+                  {qa.question}
+                </h2>
+                <p className="mt-4 text-[15px] leading-relaxed text-bark">
+                  {qa.answer}
+                </p>
+              </FadeUp>
+            ))}
           </div>
-        </section>
-      </div>
-    </div>
+
+          <FadeUp delay={0.2} className="mt-12 flex flex-wrap gap-x-8 gap-y-3">
+            <Link
+              href="/#follow"
+              className="group inline-flex items-center gap-2 border-b border-ink pb-1 font-medium text-ink transition-colors hover:border-leaf hover:text-leaf"
+            >
+              Subscribe
+              <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/research"
+              className="inline-flex items-center border-b border-transparent pb-1 text-bark transition-colors hover:border-bark hover:text-ink"
+            >
+              See the research
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+    </>
   );
 }

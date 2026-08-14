@@ -31,4 +31,4 @@ Next season, double it. The season after, double again. In three years you're fe
 
 That "what do I do this week, in this exact spot" guidance is exactly what Off Grid Diet is being built to give you. Until it's here, the Field Journal is your weekly nudge.
 
-*Join the waitlist below to get each new issue — and be first in when the app opens.*
+*Subscribe below to get each new issue — one practical read a week, plus the research behind each finding.*

@@ -31,4 +31,4 @@ This is the hard one. When seedlings come up in a thick clump, they choke each o
 
 Notice something? None of these are about buying better seeds or having a "green thumb." They're about **timing and information** — knowing the one thing that matters at each stage. That's the whole reason we're building Off Grid Diet: to put the right next step in front of you before the garden fails, not after.
 
-*Want the weekly breakdown of what to plant, fix, and harvest? Join the waitlist below — one practical article every week.*
+*Want the weekly breakdown of what to plant, fix, and harvest? Subscribe below — one practical article every week, plus the research notes behind each finding.*

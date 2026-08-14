@@ -1,5 +1,22 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Off Grid Diet design tokens.
+ *
+ * A gardening research publication: warm paper, botanical line art, and a
+ * seed-catalogue palette. Earthy, but with real chroma — an earlier pass was
+ * so desaturated it read as black and white.
+ *
+ * Three accents, each with a job:
+ *   leaf  — growth, links, primary action. The dominant accent.
+ *   ochre — harvest gold. Figures, marks, illustration. NEVER body text:
+ *           it only hits 2.89:1 on paper. Use `ochre-deep` (5.23:1) for text.
+ *   beet  — deep contrast note, and the semantic "already visible damage"
+ *           state on the detection-window rail.
+ *
+ * Three grounds give the scroll a rhythm — alternating bands rather than one
+ * flat page: paper → parchment → sage.
+ */
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -17,23 +34,35 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Off Grid Diet earthy palette
-        forest: {
-          DEFAULT: "#1F3D2B", // deep forest green
-          900: "#152A1E",
-          700: "#274B36",
-        },
-        sprout: {
-          DEFAULT: "#6FA344", // fresh growth
-          light: "#8FBF63",
-        },
-        soil: "#5B4636", // earth brown
-        cream: "#F7F2E7", // paper / background
-        sun: "#E0A24E", // warm amber accent
-        ink: "#1C1D17", // near-black text
-        stone: "#6B6B60", // muted secondary text
+        // ── grounds ────────────────────────────────────────────────
+        paper: "#F7F3E8", // default page ground, warm
+        parchment: "#EFE7D4", // tinted band — a shade deeper
+        sage: "#DFE5D2", // tinted band — green-cast
 
-        // shadcn semantic tokens mapped to CSS vars
+        // ── ink ────────────────────────────────────────────────────
+        ink: "#23281E", // primary text, deep olive-black  13.59:1
+        bark: "#55604B", // secondary text                  5.99:1
+        line: "#D9CFB8", // hairlines
+
+        // ── accents ────────────────────────────────────────────────
+        leaf: {
+          DEFAULT: "#2F6B35", // 5.78:1 — safe for text
+          deep: "#1F4A24",
+          soft: "#7FA271",
+        },
+        /** Graphics and large figures ONLY — 2.89:1, fails as text. */
+        ochre: {
+          DEFAULT: "#C08422",
+          deep: "#8A5C13", // 5.23:1 — the text-safe ochre
+          soft: "#E8C77E",
+        },
+        beet: {
+          DEFAULT: "#8A3350", // 7.09:1
+          soft: "#C9899C",
+        },
+        rust: "#B4522F", // 4.52:1 — semantic warmth
+
+        // shadcn semantic tokens mapped to CSS vars (see globals.css)
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -53,9 +82,11 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["var(--font-archivo)", "Arial Black", "sans-serif"],
+        // Fraunces: a soft, slightly wonky variable serif. Editorial character
+        // without the Playfair-on-cream wedding-invitation cliché.
+        heading: ["var(--font-fraunces)", "Georgia", "serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        mono: ["var(--font-space-mono)", "ui-monospace", "monospace"],
+        mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -64,21 +95,29 @@ const config: Config = {
         xl: "calc(var(--radius) + 6px)",
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(31,61,43,0.06), 0 10px 30px rgba(31,61,43,0.08)",
-        lift: "0 16px 40px rgba(31,61,43,0.16)",
+        soft: "0 1px 2px rgba(35,40,30,0.04), 0 8px 24px rgba(35,40,30,0.06)",
+      },
+      maxWidth: {
+        measure: "38rem",
       },
       keyframes: {
         "fade-up": {
-          from: { opacity: "0", transform: "translateY(16px)" },
+          from: { opacity: "0", transform: "translateY(10px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
-        grow: {
-          "0%": { transform: "scaleY(0.6)", opacity: "0.5" },
-          "100%": { transform: "scaleY(1)", opacity: "1" },
+        /** Slow sway for the botanical marks — barely perceptible. */
+        sway: {
+          "0%, 100%": { transform: "rotate(-1.5deg)" },
+          "50%": { transform: "rotate(1.5deg)" },
+        },
+        draw: {
+          from: { strokeDashoffset: "1" },
+          to: { strokeDashoffset: "0" },
         },
       },
       animation: {
-        "fade-up": "fade-up 0.6s ease-out both",
+        "fade-up": "fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both",
+        sway: "sway 7s ease-in-out infinite",
       },
     },
   },

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Archivo, Space_Mono } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { StickyFollow } from "@/components/layout/StickyFollow";
 import { Toaster } from "@/components/ui/sonner";
 import { StructuredData } from "@/components/StructuredData";
 
@@ -13,47 +14,48 @@ const inter = Inter({
   display: "swap",
 });
 
-const archivo = Archivo({
+// Fraunces carries the personality: a soft, slightly wonky variable serif.
+// SOFT/WONK are what keep it from reading as a stiff didone.
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-archivo",
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["SOFT", "WONK"],
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
-const spaceMono = Space_Mono({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-space-mono",
-  display: "swap",
-});
+const TITLE = "Off Grid Diet — Gardening Research & Field Notes";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: {
-    default: "Off Grid Diet — Grow Your Own Food, Actually Keep It Alive",
-    template: `%s | ${siteConfig.name}`,
-  },
+  title: { default: TITLE, template: `%s | ${siteConfig.name}` },
   description: siteConfig.description,
   keywords: [
-    "grow your own food",
-    "vegetable gardening app",
+    "gardening research",
     "why did my garden fail",
-    "self-sufficient food",
-    "off grid diet",
-    "beginner gardening tips",
+    "vegetable growing guide",
     "home food growing",
+    "crop failure causes",
+    "gardening newsletter",
+    "off grid diet",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: "Off Grid Diet — Grow Your Own Food, Actually Keep It Alive",
+    title: TITLE,
     description: siteConfig.description,
     images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Off Grid Diet — Grow Your Own Food, Actually Keep It Alive",
+    title: TITLE,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
@@ -66,12 +68,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${archivo.variable} ${spaceMono.variable} min-h-screen bg-background font-sans text-foreground`}
+        className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} min-h-screen bg-background font-sans text-foreground`}
       >
         <StructuredData />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-leaf focus:px-4 focus:py-2 focus:font-semibold focus:text-paper"
+        >
+          Skip to content
+        </a>
         <Navbar />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
+        <StickyFollow />
         <Toaster />
       </body>
     </html>

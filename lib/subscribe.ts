@@ -1,5 +1,5 @@
 /**
- * Waitlist subscribe helper — provider-ready with a graceful no-key fallback.
+ * Newsletter subscribe helper — provider-ready with a graceful no-key fallback.
  *
  * Priority order (first configured provider wins):
  *   1. MailerLite   — set MAILERLITE_API_KEY (+ optional MAILERLITE_GROUP_ID)

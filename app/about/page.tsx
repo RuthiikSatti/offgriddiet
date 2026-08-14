@@ -1,113 +1,100 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SectionHeading } from "@/components/sections/SectionHeading";
-import { GridOverlay } from "@/components/layout/GridOverlay";
+import { ArrowRight } from "lucide-react";
 import { FadeUp } from "@/components/motion/FadeUp";
+import { ForecastRail } from "@/components/sections/ForecastRail";
 
 export const metadata: Metadata = {
-  title: "About — Why We're Building Off Grid Diet",
+  title: "About — Why This Research Exists",
   description:
-    "Off Grid Diet is a preventive gardening app in development. It started from a documented pattern of repeat gardening failures and a gap every plant app leaves wide open. Here's the story and the approach.",
+    "Off Grid Diet is a gardening research project. It started from a documented pattern of repeat crop failures among home growers. Here's the story, the method, and who writes it.",
   alternates: { canonical: "/about" },
 };
 
-const glass =
-  "rounded-xl border border-cream/15 bg-forest-700/50 p-7 text-cream backdrop-blur-md";
+const sections = [
+  {
+    kicker: "01",
+    heading: "It started with a pattern, not a theory",
+    body: "One gardener wrote about failing to grow carrots five years in a row — changing the soil, the spacing, and the timing every season, and never learning why it kept failing. The post drew 2,586 upvotes and a flood of growers describing the exact same multi-year mystery. That's not one person's bad luck. It's a documented, repeated problem, and it's what this project set out to understand.",
+  },
+  {
+    kicker: "02",
+    heading: "Eight failure modes, mapped from real threads",
+    body: "We read gardening communities rather than running a survey — r/homesteading, r/vegetablegardening, r/urbanfarming and related threads — and grouped what people actually described into eight recurring failure modes: harvest timing, overnight pest damage, cost versus yield, soil confusion, small-space constraints, food-security anxiety, the multi-year failure loop, and the beginner knowledge gap.",
+  },
+  {
+    kicker: "03",
+    heading: "The gap is prevention, not identification",
+    body: "Most published gardening advice is good at one thing: naming a problem once it's visible. But by the time a leaf yellows or a root forks, the conditions that caused it were set weeks earlier. The interesting question — the one this project keeps returning to — is what was already measurable before anything looked wrong.",
+  },
+  {
+    kicker: "04",
+    heading: "How we publish",
+    body: "Findings are written up with their sources attached, and we separate cited guidance from community signal from things we genuinely don't know. Where we prioritise sources, it's public Extension programmes and government agencies. If a claim isn't supported, we say so rather than rounding it up. Everything goes out free, one read a week.",
+  },
+];
 
 export default function AboutPage() {
   return (
-    <div className="relative min-h-screen bg-forest-900 pt-16">
-      <GridOverlay tone="light" />
-      <div className="relative z-10">
-        <section className="section">
-          <div className="container-page">
-            <SectionHeading
-              light
-              eyebrow="About"
-              title="We're building the gardening app that warns you first."
-              description="Off Grid Diet is a preventive gardening app in active development. This is where it came from and why it works differently."
-            />
+    <>
+      <section className="pb-16 pt-32 sm:pt-40">
+        <div className="container-page">
+          <FadeUp immediate>
+            <p className="label-mono">About</p>
+            <h1 className="mt-6 max-w-3xl text-balance font-heading text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
+              A research project about why home food crops fail.
+            </h1>
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-bark">
+              Off Grid Diet reads what growers actually report, maps the
+              patterns, and publishes what the evidence supports.
+            </p>
+          </FadeUp>
 
-            <div className="mx-auto mt-12 max-w-3xl space-y-6">
-              <FadeUp className={glass}>
-                <h2 className="font-heading text-xl font-bold text-cream">
-                  It started with a pattern, not a hunch
-                </h2>
-                <p className="mt-3 text-base leading-relaxed text-cream/85">
-                  One gardener wrote about failing to grow carrots five years in
-                  a row — changing the soil, the spacing, and the timing every
-                  season, and never learning why it kept failing. The post drew
-                  2,586 upvotes and a flood of gardeners describing the exact
-                  same multi-year mystery. That&apos;s not one person&apos;s bad
-                  luck. It&apos;s a documented, repeated problem — and it&apos;s
-                  the reason Off Grid Diet exists.
-                </p>
-              </FadeUp>
+          <FadeUp delay={0.12} className="hairline mt-16 pt-12">
+            <ForecastRail />
+          </FadeUp>
+        </div>
+      </section>
 
-              <FadeUp className={glass}>
-                <h2 className="font-heading text-xl font-bold text-cream">
-                  Eight problems. Today&apos;s apps solve one.
-                </h2>
-                <p className="mt-3 text-base leading-relaxed text-cream/85">
-                  We mapped eight recurring pain points from real gardening
-                  threads across Reddit — harvest timing, overnight pest damage,
-                  cost vs. yield, soil confusion, small-space growing, and the
-                  multi-year failure loop among them. Every plant app on the
-                  market today solves exactly one of them: identifying what&apos;s
-                  already wrong, after it&apos;s visible. The other seven are
-                  wide open.
-                </p>
-              </FadeUp>
-
-              <FadeUp className={glass}>
-                <h2 className="font-heading text-xl font-bold text-cream">
-                  Preventive, not diagnostic
-                </h2>
-                <p className="mt-3 text-base leading-relaxed text-cream/85">
-                  Apps like PictureThis and Plantix are diagnostic — you point a
-                  camera at a sick plant and they name the disease. Useful, but
-                  by then the damage is done. Off Grid Diet is built to flag
-                  what&apos;s coming — timing, pests, soil, and what to do this
-                  week for your specific climate and crops — before the yellow
-                  leaves show up. It&apos;s the difference between a smoke
-                  detector and an autopsy.
-                </p>
-              </FadeUp>
-
-              <FadeUp className={glass}>
-                <h2 className="font-heading text-xl font-bold text-cream">
-                  Where things stand
-                </h2>
-                <p className="mt-3 text-base leading-relaxed text-cream/85">
-                  Off Grid Diet is pre-launch and in active development. Because
-                  it&apos;s early and waitlist-based, you won&apos;t find it on
-                  review platforms or the app stores yet — so we&apos;re being
-                  upfront about exactly what&apos;s built, what&apos;s coming,
-                  and the evidence behind it. If you want the app that prevents
-                  the next failure instead of narrating the last one, join the
-                  waitlist — you&apos;ll get early access and a practical
-                  gardening read every week while you wait.
-                </p>
-              </FadeUp>
-            </div>
-
-            <div className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">
-              <Link
-                href="/#waitlist"
-                className="bg-sprout px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-forest-900 transition-colors hover:bg-sprout-light"
+      <section className="section pt-0">
+        <div className="container-page">
+          <div className="max-w-2xl">
+            {sections.map((s, i) => (
+              <FadeUp
+                key={s.kicker}
+                delay={i * 0.06}
+                className="border-t border-line py-10"
               >
-                Join the Waitlist
-              </Link>
-              <Link
-                href="/research"
-                className="border border-cream/40 px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-cream transition-colors hover:bg-cream/10"
-              >
-                See the Research
-              </Link>
-            </div>
+                <p className="font-mono text-[11px] tracking-[0.16em] text-bark">
+                  {s.kicker}
+                </p>
+                <h2 className="mt-4 font-heading text-xl font-semibold leading-snug tracking-tight text-ink sm:text-2xl">
+                  {s.heading}
+                </h2>
+                <p className="mt-4 text-[15px] leading-relaxed text-bark">
+                  {s.body}
+                </p>
+              </FadeUp>
+            ))}
           </div>
-        </section>
-      </div>
-    </div>
+
+          <FadeUp delay={0.2} className="mt-12 flex flex-wrap gap-x-8 gap-y-3">
+            <Link
+              href="/#follow"
+              className="group inline-flex items-center gap-2 border-b border-ink pb-1 font-medium text-ink transition-colors hover:border-leaf hover:text-leaf"
+            >
+              Subscribe
+              <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-0.5" />
+            </Link>
+            <Link
+              href="/research"
+              className="inline-flex items-center border-b border-transparent pb-1 text-bark transition-colors hover:border-bark hover:text-ink"
+            >
+              See the research
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+    </>
   );
 }

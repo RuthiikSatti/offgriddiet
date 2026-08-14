@@ -3,25 +3,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-60",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-leaf focus-visible:ring-offset-2 focus-visible:ring-offset-paper disabled:pointer-events-none disabled:opacity-60",
   {
     variants: {
       variant: {
-        forest: "bg-forest text-cream shadow-sm hover:bg-forest-700",
-        sprout: "bg-sprout text-forest-900 shadow-sm hover:bg-sprout-light",
-        sun: "bg-sun text-forest-900 shadow-sm hover:brightness-105",
+        /** Primary action. Deep leaf on paper — the one filled control. */
+        solid: "bg-ink text-paper hover:bg-leaf",
+        leaf: "bg-leaf text-paper hover:bg-leaf/90",
         outline:
-          "border border-forest/25 bg-transparent text-forest hover:bg-forest/5",
-        ghost: "text-forest hover:bg-forest/5",
+          "border border-line bg-transparent text-ink hover:border-ink/40 hover:bg-parchment/50",
+        ghost: "text-bark hover:text-ink",
       },
       size: {
-        default: "h-11 px-6",
+        default: "h-11 px-5",
         sm: "h-9 px-4",
-        lg: "h-12 px-8 text-base",
+        lg: "h-12 px-6",
         icon: "h-11 w-11",
       },
     },
-    defaultVariants: { variant: "forest", size: "default" },
+    defaultVariants: { variant: "solid", size: "default" },
   }
 );
 

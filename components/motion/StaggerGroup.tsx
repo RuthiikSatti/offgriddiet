@@ -1,45 +1,56 @@
 "use client";
 
-import { motion, type HTMLMotionProps, type Variants } from "framer-motion";
+import {
+  Children,
+  isValidElement,
+  cloneElement,
+  type HTMLAttributes,
+  type ReactNode,
+  type ReactElement,
+} from "react";
 import { cn } from "@/lib/utils";
+import { useReveal } from "@/components/motion/useReveal";
 
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
-
+/**
+ * Reveals children in sequence, 60ms apart. CSS-driven for the same
+ * hydration-safety reason as FadeUp — see components/motion/useReveal.ts.
+ */
 export function StaggerGroup({
   children,
   className,
   ...props
-}: HTMLMotionProps<"div">) {
+}: HTMLAttributes<HTMLDivElement> & { children?: ReactNode }) {
+  const { ref, shown } = useReveal<HTMLDivElement>();
+
   return (
-    <motion.div
-      className={cn(className)}
-      variants={container}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
-      {...props}
-    >
-      {children}
-    </motion.div>
+    <div ref={ref} className={cn(className)} {...props}>
+      {Children.map(children, (child, i) => {
+        if (!isValidElement(child)) return child;
+        const el = child as ReactElement<{
+          className?: string;
+          style?: React.CSSProperties;
+        }>;
+        return cloneElement(el, {
+          className: cn("reveal", shown && "reveal-in", el.props.className),
+          style: { transitionDelay: `${i * 0.06}s`, ...el.props.style },
+        });
+      })}
+    </div>
   );
 }
 
+/**
+ * Marks a direct child of StaggerGroup. It's a plain wrapper — StaggerGroup
+ * injects the reveal classes and the per-item delay.
+ */
 export function StaggerItem({
   children,
   className,
   ...props
-}: HTMLMotionProps<"div">) {
+}: HTMLAttributes<HTMLDivElement> & { children?: ReactNode }) {
   return (
-    <motion.div className={cn(className)} variants={item} {...props}>
+    <div className={cn(className)} {...props}>
       {children}
-    </motion.div>
+    </div>
   );
 }

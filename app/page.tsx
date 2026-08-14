@@ -1,16 +1,18 @@
 import { getAllArticles } from "@/lib/journal";
-import { ChapterHero } from "@/components/sections/ChapterHero";
-import { LoadingScreen } from "@/components/layout/LoadingScreen";
-import { PublishingHub } from "@/components/sections/PublishingHub";
+import { Hero } from "@/components/sections/Hero";
+import { Evidence } from "@/components/sections/Evidence";
+import { HarvestPreview } from "@/components/sections/HarvestPreview";
+import { FollowCta } from "@/components/sections/FollowCta";
 
 export default function HomePage() {
   const articles = getAllArticles();
 
   return (
     <>
-      <LoadingScreen />
-      <ChapterHero latestArticle={articles[0]} />
-      <PublishingHub />
+      <Hero />
+      <Evidence />
+      <HarvestPreview articles={articles} />
+      <FollowCta />
     </>
   );
 }

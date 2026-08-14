@@ -8,9 +8,10 @@ export function Toaster() {
       position="top-center"
       toastOptions={{
         classNames: {
-          toast: "rounded-xl border border-border bg-white text-ink shadow-soft",
-          title: "font-semibold text-forest",
-          description: "text-stone",
+          toast:
+            "rounded-md border border-line bg-paper text-ink shadow-soft font-sans",
+          title: "font-medium text-ink",
+          description: "text-bark",
         },
       }}
     />

@@ -5,52 +5,29 @@ type Props = {
   eyebrow?: string;
   title: string;
   description?: string;
-  align?: "left" | "center";
-  light?: boolean;
   className?: string;
+  /**
+   * Render as the page's <h1>. Use on pages where this heading IS the page
+   * title — a page with no h1 is a real SEO and screen-reader defect.
+   */
+  as?: "h1" | "h2";
 };
 
 export function SectionHeading({
   eyebrow,
   title,
   description,
-  align = "center",
-  light = false,
   className,
+  as: Heading = "h2",
 }: Props) {
   return (
-    <FadeUp
-      className={cn(
-        "max-w-3xl",
-        align === "center" ? "mx-auto text-center" : "",
-        className
-      )}
-    >
-      {eyebrow && (
-        <p
-          className={cn(
-            "mb-4 font-mono text-xs font-bold uppercase tracking-[0.25em]",
-            light ? "text-sprout-light" : "text-sprout"
-          )}
-        >
-          [ {eyebrow} ]
-        </p>
-      )}
-      <h2
-        className={cn(
-          "font-heading text-3xl font-extrabold uppercase leading-[0.95] tracking-tight text-balance sm:text-5xl",
-          light ? "text-cream" : "text-forest"
-        )}
-      >
+    <FadeUp className={cn("max-w-2xl", className)}>
+      {eyebrow && <p className="label-mono mb-5">{eyebrow}</p>}
+      <Heading className="text-balance font-heading text-2xl font-semibold leading-tight tracking-tight text-ink sm:text-3xl">
         {title}
-      </h2>
+      </Heading>
       {description && (
-        <p
-          className={cn(
-            "mt-5 text-base leading-relaxed sm:text-lg",
-            light ? "text-cream/80" : "text-stone"
-          )}
-        >
+        <p className="mt-5 text-[15px] leading-relaxed text-bark sm:text-base">
           {description}
         </p>
       )}

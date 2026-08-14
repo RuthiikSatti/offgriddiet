@@ -3,44 +3,126 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sprout } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
+import { Sprout } from "@/components/graphics/Botanical";
 
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const overHero = pathname === "/";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   useEffect(() => setOpen(false), [pathname]);
 
-  const solid = scrolled || !overHero;
-  const text = solid ? "text-forest" : "text-cream";
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
-    <header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-300", solid ? "border-b border-forest/15 bg-cream/85 backdrop-blur-md" : "bg-transparent")}>
-      <nav className="container-page flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className={cn("flex h-9 w-9 items-center justify-center border", solid ? "border-forest/40 text-forest" : "border-cream/50 text-cream")}><Sprout className="h-5 w-5" /></span>
-          <span className={cn("font-heading text-[15px] font-extrabold uppercase leading-[0.95] tracking-tight", text)}>Off Grid<br />Diet</span>
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        scrolled || open
+          ? "border-b border-line bg-paper/85 backdrop-blur-md"
+          : "border-b border-transparent"
+      )}
+    >
+      <nav className="container-page flex h-16 items-center justify-between gap-6">
+        <Link
+          href="/"
+          className="group flex items-center gap-2.5 rounded-sm font-heading text-base font-semibold tracking-tight text-ink"
+        >
+          <Sprout
+            className="h-5 w-4 shrink-0 text-leaf transition-colors group-hover:text-ochre-deep"
+            strokeWidth={1.5}
+          />
+          Off Grid Diet
         </Link>
-        <div className={cn("hidden items-center gap-6 font-mono text-[11px] uppercase tracking-widest 2xl:flex", solid ? "text-forest/60" : "text-cream/70")}><span>V0.1 — Grow-Tech</span><span>Season 2026</span><span>Est. 2026</span></div>
-        <div className="flex items-center gap-4">
-          <ul className={cn("hidden items-center gap-4 font-mono text-[10px] uppercase tracking-[0.1em] xl:flex", solid ? "text-forest/70" : "text-cream/75")}>
-            {siteConfig.nav.slice(1).map((item) => <li key={item.href}><Link href={item.href} className="transition-opacity hover:opacity-100 hover:underline">{item.label}</Link></li>)}
+
+        <div className="flex items-center gap-6">
+          <ul className="hidden items-center gap-7 text-sm md:flex">
+            {siteConfig.nav.slice(1).map((item) => {
+              const active =
+                pathname === item.href || pathname.startsWith(`${item.href}/`);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "rounded-sm border-b pb-0.5 transition-colors",
+                      active
+                        ? "border-ink text-ink"
+                        : "border-transparent text-bark hover:text-ink"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
-          <Link href="/#waitlist" className="hidden font-mono text-[11px] font-bold uppercase tracking-widest text-sun transition-colors hover:text-sprout sm:inline-flex">[ Join ]</Link>
-          <button type="button" aria-label="Toggle menu" onClick={() => setOpen((value) => !value)} className={cn("inline-flex h-10 w-10 items-center justify-center border xl:hidden", solid ? "border-forest/30 text-forest" : "border-cream/40 text-cream")}>{open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
+
+          <Link
+            href="/#follow"
+            className="hidden rounded-md bg-ink px-4 py-2 text-sm font-medium text-paper transition-colors hover:bg-leaf sm:inline-flex"
+          >
+            {siteConfig.followCta}
+          </Link>
+
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-md text-ink md:hidden"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </nav>
-      {open && <div className="border-t border-forest/15 bg-cream xl:hidden"><ul className="container-page flex flex-col py-3 font-mono text-sm uppercase tracking-widest">{siteConfig.nav.map((item) => <li key={item.href}><Link href={item.href} className="block px-2 py-3 text-forest/80 hover:text-forest">{item.label}</Link></li>)}<li className="mt-1 px-2"><Link href="/#waitlist" className="block py-2 font-bold text-sun">[ Join the Harvest ]</Link></li></ul></div>}
+
+      {open && (
+        <div className="border-t border-line bg-paper md:hidden">
+          <ul className="container-page flex flex-col py-3">
+            {siteConfig.nav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="block rounded-sm py-3 font-heading text-lg font-medium text-ink"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li className="mt-2 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-4 text-sm text-bark">
+              {siteConfig.secondaryNav.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+            </li>
+            <li className="py-4">
+              <Link
+                href="/#follow"
+                className="block rounded-md bg-ink py-3 text-center font-medium text-paper"
+              >
+                {siteConfig.followCta}
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   );
 }

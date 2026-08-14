@@ -1,53 +1,70 @@
 import Link from "next/link";
-import { Sprout } from "lucide-react";
 import { siteConfig } from "@/lib/site";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { FollowForm } from "@/components/FollowForm";
+import { Root } from "@/components/graphics/Botanical";
 
 export function Footer() {
   return (
-    <footer className="relative z-10 bg-forest text-cream">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-2">
+    <footer className="border-t border-line bg-parchment">
+      <div className="container-page grid gap-12 py-16 md:grid-cols-[1.2fr_1fr] md:gap-20">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-cream/10 text-sprout-light">
-              <Sprout className="h-5 w-5" />
-            </span>
-            <span className="font-heading text-lg font-semibold">
+          <div className="flex items-center gap-3">
+            <Root className="h-8 w-auto shrink-0 text-ochre" strokeWidth={1.4} />
+            <p className="font-heading text-base font-semibold tracking-tight text-ink">
               {siteConfig.name}
-            </span>
+            </p>
           </div>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/70">
-            {siteConfig.tagline} The app is still growing — join the waitlist and
-            harvest one practical gardening read every week while you wait.
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-bark">
+            A gardening research project. We map why home food crops fail, using
+            documented evidence from real growers, and publish what we find.
           </p>
-          <ul className="mt-6 flex gap-5 text-sm text-cream/70">
+
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2.5 text-sm">
             {siteConfig.nav.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="hover:text-cream">
-                  {item.label}
-                </Link>
-              </li>
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-sm text-bark transition-colors hover:text-ink"
+              >
+                {item.label}
+              </Link>
             ))}
-          </ul>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2.5 text-sm">
+            {siteConfig.secondaryNav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-sm text-bark/80 transition-colors hover:text-ink"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div>
-          <h4 className="font-heading text-lg font-semibold">
-            Get the weekly harvest
-          </h4>
-          <p className="mt-2 text-sm text-cream/70">{siteConfig.waitlistPerk}</p>
-          <div className="mt-4">
-            <WaitlistForm source="footer" variant="light" cta="Join" />
+          <p className="label-mono">The weekly letter</p>
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-bark">
+            {siteConfig.followPerk}
+          </p>
+          <div className="mt-5">
+            <FollowForm source="footer" stacked cta={siteConfig.followCta} />
           </div>
         </div>
       </div>
 
-      <div className="border-t border-cream/10">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-cream/50 sm:flex-row">
+      <div className="border-t border-line">
+        <div className="container-page flex flex-col items-start justify-between gap-2 py-6 text-xs text-bark sm:flex-row sm:items-center">
           <p>
-            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+            © {new Date().getFullYear()} {siteConfig.name}
           </p>
-          <p>Grown with care. No ads, no spam.</p>
+          <a
+            href={`mailto:${siteConfig.contactEmail}`}
+            className="rounded-sm transition-colors hover:text-ink"
+          >
+            {siteConfig.contactEmail}
+          </a>
         </div>
       </div>
     </footer>

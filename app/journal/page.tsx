@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import { getAllArticles } from "@/lib/journal";
 import { siteConfig } from "@/lib/site";
 import { ArticleCard } from "@/components/sections/ArticleCard";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { FollowForm } from "@/components/FollowForm";
 import { FadeUp } from "@/components/motion/FadeUp";
 import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
 
 export const metadata: Metadata = {
-  title: "The Harvest — Weekly Gardening Tips",
+  title: "Writing — Weekly Gardening Research",
   description:
-    "The Harvest: practical, no-nonsense gardening articles every week — why crops fail, what to plant when, and how to grow a self-sufficient food supply that actually works.",
+    "Practical, evidence-led gardening writing: why crops fail, what to plant when, and the research notes behind each finding.",
   alternates: { canonical: "/journal" },
 };
 
@@ -18,34 +18,32 @@ export default function JournalPage() {
 
   return (
     <>
-      <section className="bg-forest pt-28 pb-16 text-cream md:pt-32">
+      <section className="pb-14 pt-32 sm:pt-40">
         <div className="container-page">
           <FadeUp immediate>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sprout-light">
-              The Harvest
-            </p>
-            <h1 className="mt-3 max-w-2xl font-heading text-4xl font-semibold leading-tight text-balance sm:text-5xl">
-              Gardening that works — one practical read a week.
+            <p className="label-mono">Writing</p>
+            <h1 className="mt-6 max-w-2xl text-balance font-heading text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
+              One practical read a week.
             </h1>
-            <p className="mt-4 max-w-xl text-lg text-cream/80">
-              No fluff, no filler. Just the fixes, timing, and tips that keep
-              real food growing — freshly harvested every week.
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-bark">
+              No fluff, no filler. What the evidence supports, what it
+              doesn&apos;t, and what to actually do about it.
             </p>
           </FadeUp>
         </div>
       </section>
 
-      <section className="section">
+      <section className="pb-20 md:pb-28">
         <div className="container-page">
           {articles.length === 0 ? (
-            <p className="text-center text-stone">
-              The first articles are being planted. Check back soon 🌱
+            <p className="border-t border-line pt-8 text-bark">
+              The first articles are being planted. Check back soon.
             </p>
           ) : (
-            <StaggerGroup className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <StaggerGroup className="grid gap-10 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
               {articles.map((a) => (
-                <StaggerItem key={a.slug}>
-                  <ArticleCard article={a} />
+                <StaggerItem key={a.slug} className="h-full">
+                  <ArticleCard article={a} showCover />
                 </StaggerItem>
               ))}
             </StaggerGroup>
@@ -53,18 +51,18 @@ export default function JournalPage() {
         </div>
       </section>
 
-      {/* Waitlist */}
       <section className="section pt-0">
         <div className="container-page">
-          <div className="mx-auto max-w-3xl rounded-2xl bg-forest p-8 text-center text-cream shadow-soft md:p-12">
-            <h2 className="font-heading text-3xl font-semibold">
-              Never miss a harvest
+          <div className="hairline max-w-xl pt-14">
+            <p className="label-mono">The weekly letter</p>
+            <h2 className="mt-5 font-heading text-2xl font-semibold tracking-tight text-ink">
+              Never miss an issue
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-cream/80">
-              {siteConfig.waitlistPerk}
+            <p className="mt-4 text-[15px] leading-relaxed text-bark">
+              {siteConfig.followPerk}
             </p>
-            <div className="mx-auto mt-6 max-w-lg">
-              <WaitlistForm source="journal-index" variant="light" />
+            <div className="mt-7 max-w-md">
+              <FollowForm source="journal-index" cta={siteConfig.followCta} />
             </div>
           </div>
         </div>

@@ -1,14 +1,54 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { ResourceLibrary } from "@/components/publishing/ResourceLibrary";
+import { FadeUp } from "@/components/motion/FadeUp";
 
 export const metadata: Metadata = {
   title: "Resource Library",
-  description: "A practical library of public gardening guides from Extension services and USDA agencies.",
+  description:
+    "A practical library of public gardening guides from Extension services and USDA agencies.",
+  alternates: { canonical: "/library" },
 };
 
 export default function LibraryPage() {
-  return <>
-    <section className="bg-cream pb-16 pt-32 md:pb-20 md:pt-40"><div className="container-page"><p className="font-mono text-xs font-bold uppercase tracking-[0.24em] text-sprout">[ The resource library ]</p><h1 className="mt-5 max-w-5xl font-heading text-5xl font-extrabold uppercase leading-[0.88] tracking-tight text-forest sm:text-7xl">Keep the useful<br />stuff close.</h1><div className="mt-7 grid max-w-4xl gap-5 md:grid-cols-2"><p className="text-base leading-relaxed text-stone sm:text-lg">A living shelf of guides, tools, and references selected for practical clarity. No affiliate links, no sponsored placements.</p><p className="border-l-2 border-sprout pl-5 text-sm leading-relaxed text-forest/80">We prioritize public Extension programs and government sources, and flag when regional conditions or local rules should guide the final call.</p></div></div></section>
-    <section className="border-t border-forest/15 bg-white py-14 md:py-20"><div className="container-page"><ResourceLibrary /></div></section>
-  </>;
+  return (
+    <>
+      <section className="pb-14 pt-32 sm:pt-40">
+        <div className="container-page">
+          <FadeUp immediate>
+            <Link
+              href="/research"
+              className="inline-flex items-center gap-1.5 rounded-sm text-sm text-bark transition-colors hover:text-ink"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" /> Research
+            </Link>
+
+            <p className="label-mono mt-10">Library</p>
+            <h1 className="mt-6 max-w-2xl text-balance font-heading text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
+              Keep the useful stuff close.
+            </h1>
+
+            <div className="mt-8 grid max-w-3xl gap-8 md:grid-cols-2">
+              <p className="text-lg leading-relaxed text-bark">
+                A living shelf of guides, tools, and references selected for
+                practical clarity. No affiliate links, no sponsored placements.
+              </p>
+              <p className="border-l-2 border-leaf pl-6 text-sm leading-relaxed text-ink/80">
+                We prioritise public Extension programmes and government
+                sources, and flag when regional conditions or local rules should
+                guide the final call.
+              </p>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      <section className="section pt-0">
+        <div className="container-page">
+          <ResourceLibrary />
+        </div>
+      </section>
+    </>
+  );
 }

@@ -1,17 +1,57 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { FindingsExplorer } from "@/components/publishing/FindingsExplorer";
+import { FadeUp } from "@/components/motion/FadeUp";
 
 export const metadata: Metadata = {
   title: "Findings",
-  description: "Practical gardening findings with clear evidence notes, limitations, and next steps.",
+  description:
+    "Practical gardening findings with clear evidence notes, limitations, and next steps.",
+  alternates: { canonical: "/findings" },
 };
 
 export default function FindingsPage() {
-  return <>
-    <section className="relative overflow-hidden bg-forest pb-20 pt-32 text-cream md:pb-28 md:pt-40">
-      <div className="pointer-events-none absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(247,242,231,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(247,242,231,0.15)_1px,transparent_1px)] [background-size:48px_48px]" />
-      <div className="container-page relative"><p className="font-mono text-xs font-bold uppercase tracking-[0.24em] text-sprout-light">[ Off Grid Diet / Findings ]</p><h1 className="mt-5 max-w-5xl font-heading text-5xl font-extrabold uppercase leading-[0.88] tracking-tight sm:text-7xl">Evidence you<br />can grow with.</h1><p className="mt-7 max-w-2xl text-base leading-relaxed text-cream/75 sm:text-lg">Each note separates cited guidance, community signals, and what we still do not know. Start with the practical next step—then make it fit your garden.</p></div>
-    </section>
-    <section className="bg-cream py-16 md:py-24"><div className="container-page"><div className="mb-10 grid gap-4 border-b border-forest/15 pb-8 md:grid-cols-2"><p className="font-mono text-[10px] uppercase tracking-[0.16em] text-stone">Issue 01 · August 2026</p><p className="text-sm leading-relaxed text-stone md:text-right">Evidence links open to their original public publishers. Recommendations are for learning—not a substitute for local Extension advice or product labels.</p></div><FindingsExplorer /></div></section>
-  </>;
+  return (
+    <>
+      <section className="pb-14 pt-32 sm:pt-40">
+        <div className="container-page">
+          <FadeUp immediate>
+            <Link
+              href="/research"
+              className="inline-flex items-center gap-1.5 rounded-sm text-sm text-bark transition-colors hover:text-ink"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" /> Research
+            </Link>
+
+            <p className="label-mono mt-10">Findings</p>
+            <h1 className="mt-6 max-w-2xl text-balance font-heading text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
+              Evidence you can grow with.
+            </h1>
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-bark">
+              Each note separates cited guidance, community signal, and what we
+              still don&apos;t know. Start with the practical next step — then
+              make it fit your garden.
+            </p>
+          </FadeUp>
+        </div>
+      </section>
+
+      <section className="section pt-0">
+        <div className="container-page">
+          <div className="mb-12 grid gap-4 border-t border-line pt-6 md:grid-cols-2">
+            <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-bark">
+              Issue 01 · August 2026
+            </p>
+            <p className="max-w-md text-sm leading-relaxed text-bark md:justify-self-end md:text-right">
+              Evidence links open to their original public publishers.
+              Recommendations are for learning — not a substitute for local
+              Extension advice or product labels.
+            </p>
+          </div>
+          <FindingsExplorer />
+        </div>
+      </section>
+    </>
+  );
 }
